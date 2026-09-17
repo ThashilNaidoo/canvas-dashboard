@@ -1,0 +1,252 @@
+/* Equal cards in two columns; even cards mirror their internal layout
+   so the grid has rhythm without any card outranking another */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.course-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'tag orb'
+    'name name'
+    'status status';
+  row-gap: var(--space-4);
+  align-items: start;
+  min-height: 240px;
+  padding: var(--space-4);
+  overflow: hidden;
+  border: var(--border-w) solid var(--line-strong);
+  background: var(--bg-raised);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Amber corner brackets, like registration marks on a file */
+.course-card::before,
+.course-card::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: var(--border-w) solid var(--amber);
+  transition:
+    width 0.25s ease,
+    height 0.25s ease;
+}
+
+.course-card::before {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.course-card::after {
+  right: -2px;
+  bottom: -2px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* Mirrored variant: brackets on the other diagonal, name at the top,
+   tag/orb swapped, status and watermark move to the opposite corners */
+.course-card:nth-child(even) {
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'orb tag'
+    'name name'
+    'status status';
+}
+
+.course-card:nth-child(even)::before {
+  left: auto;
+  right: -2px;
+  border-right: var(--border-w) solid var(--amber);
+  border-left: 0;
+}
+
+.course-card:nth-child(even)::after {
+  right: auto;
+  left: -2px;
+  border-left: var(--border-w) solid var(--amber);
+  border-right: 0;
+}
+
+.course-card:nth-child(even) .course-tag {
+  justify-self: end;
+}
+
+.course-card:nth-child(even) .course-name {
+  align-self: start;
+}
+
+.course-card:nth-child(even) .course-status {
+  justify-self: end;
+}
+
+.course-card:nth-child(even) .course-watermark {
+  right: auto;
+  left: -0.08em;
+}
+
+.course-card:hover {
+  background: #26201a;
+  border-color: var(--amber-deep);
+}
+
+.course-card:hover::before,
+.course-card:hover::after {
+  width: 36px;
+  height: 36px;
+}
+
+.course-tag {
+  grid-area: tag;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.course-orb {
+  grid-area: orb;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: var(--border-w) solid var(--amber);
+  box-shadow: 0 0 0 4px var(--amber-glow);
+}
+
+.course-name {
+  grid-area: name;
+  align-self: end;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text-h);
+  text-wrap: balance;
+  max-width: 24ch;
+}
+
+.course-status {
+  grid-area: status;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.course-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+}
+
+/* Oversized numeral bleeding off the bottom-right corner */
+.course-watermark {
+  position: absolute;
+  right: -0.08em;
+  bottom: -0.3em;
+  font-size: 7.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--amber);
+  opacity: 0.09;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.25s ease;
+}
+
+.course-card:hover .course-watermark {
+  opacity: 0.16;
+}
+
+/* CRT refresh: a thin amber line sweeps down the card once on hover */
+.course-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--amber);
+  box-shadow: 0 0 8px 1px var(--amber-glow-strong);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.course-card:hover .course-sweep {
+  animation: sweep 0.7s ease-out;
+}
+
+@keyframes sweep {
+  from {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  to {
+    transform: translateY(240px);
+    opacity: 0;
+  }
+}
+
+/* Skeleton */
+
+.course-card-skeleton {
+  grid-template-areas:
+    'tag tag'
+    'name name'
+    'status status';
+}
+
+.course-card-skeleton .course-tag {
+  color: var(--text-muted);
+}
+
+.skeleton-line {
+  grid-area: name;
+  align-self: end;
+  display: block;
+  height: 1.4rem;
+  width: 70%;
+  background: linear-gradient(90deg, var(--line) 0%, var(--line-strong) 50%, var(--line) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-card {
+    min-height: 170px;
+  }
+
+  .course-watermark {
+    font-size: 5.5rem;
+  }
+}

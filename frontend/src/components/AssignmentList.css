@@ -1,0 +1,110 @@
+/* Ledger: equal rows sharing hairlines inside a 2px frame */
+.assignment-list {
+  display: grid;
+  gap: 1px;
+  background: var(--line-strong);
+  border: var(--border-w) solid var(--line-strong);
+}
+
+.assignment {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-raised);
+  box-shadow: inset 4px 0 0 transparent;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.assignment:hover {
+  background: #26201a;
+  box-shadow: inset 4px 0 0 var(--amber);
+}
+
+/* Date block on the left, stacked like a tear-off calendar */
+.assignment-date {
+  display: grid;
+  gap: 2px;
+  padding-right: var(--space-3);
+  border-right: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.assignment-weekday {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.assignment-day {
+  font-size: 0.85rem;
+  color: var(--text-h);
+  white-space: nowrap;
+}
+
+.assignment-body {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.assignment-title {
+  font-weight: 500;
+  color: var(--text-h);
+  line-height: 1.3;
+}
+
+.assignment-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.assignment-due {
+  padding: 5px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Urgency: amber for due within a day, red-orange once overdue */
+.assignment.soon .assignment-due {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.assignment.soon .assignment-day {
+  color: var(--amber);
+}
+
+.assignment.overdue .assignment-due {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.assignment.overdue .assignment-day {
+  color: var(--danger);
+}
+
+@media (max-width: 600px) {
+  .assignment {
+    grid-template-columns: 64px 1fr;
+    padding-inline: var(--space-3);
+  }
+
+  .assignment-due {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
