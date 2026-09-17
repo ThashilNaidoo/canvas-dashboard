@@ -81,6 +81,24 @@ ul {
   color: var(--text-muted);
 }
 
+/* Loading placeholder bar with a slow shimmer */
+.skeleton-line {
+  display: block;
+  height: 1rem;
+  background: linear-gradient(90deg, var(--line) 0%, var(--line-strong) 50%, var(--line) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

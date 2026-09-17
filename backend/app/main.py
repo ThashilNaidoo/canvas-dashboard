@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.canvas import get_course_names
+from app.canvas import get_announcements, get_assignments, get_course_names
 
 app = FastAPI(title="Coursework Dashboard API")
 
@@ -20,3 +20,13 @@ def health():
 @app.get("/api/courses")
 def courses():
     return get_course_names()
+
+
+@app.get("/api/assignments")
+def assignments():
+    return get_assignments()
+
+
+@app.get("/api/announcements")
+def announcements():
+    return get_announcements()

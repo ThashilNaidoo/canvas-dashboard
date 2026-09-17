@@ -18,8 +18,26 @@
 
 .announcement {
   position: relative;
+}
+
+/* The whole entry is one button, reset to look like plain content */
+.announcement-button {
   display: grid;
   gap: var(--space-1);
+  width: 100%;
+  padding: var(--space-2);
+  margin: calc(-1 * var(--space-2));
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.announcement-button:hover {
+  background: rgba(255, 184, 77, 0.06);
 }
 
 .announcement-node {
@@ -70,8 +88,33 @@
 }
 
 .announcement-excerpt {
+  display: block;
   font-size: 0.95rem;
   color: var(--text);
   line-height: 1.5;
   max-width: 48ch;
+}
+
+/* Skeleton: meta, title, and two excerpt lines */
+.announcement-skeleton .announcement-node {
+  border-color: var(--line-strong);
+}
+
+.announcement-skeleton .skeleton-line:nth-child(2) {
+  height: 0.7rem;
+  width: 45%;
+}
+
+.announcement-skeleton .skeleton-line:nth-child(3) {
+  height: 1.1rem;
+  width: 70%;
+  margin-block: var(--space-1);
+}
+
+.announcement-skeleton .skeleton-line:nth-child(4) {
+  width: 90%;
+}
+
+.announcement-skeleton .skeleton-line:nth-child(5) {
+  width: 60%;
 }

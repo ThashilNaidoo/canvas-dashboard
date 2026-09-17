@@ -1,58 +1,76 @@
-import { useEffect, useState } from 'react'
 import AnnouncementFeed from '../components/AnnouncementFeed'
 import AssignmentList from '../components/AssignmentList'
-import CourseGrid, { type Course } from '../components/CourseGrid'
+import CourseGrid from '../components/CourseGrid'
 import SyncMark from '../components/SyncMark'
+import { fetchAnnouncements, fetchAssignments, fetchCourses } from '../lib/api'
 import { pad } from '../lib/format'
-import { announcements, assignments } from '../mock/data'
+import { useFetch } from '../lib/useFetch'
 import './HomePage.css'
 
-function HomePage() {
-  const [courses, setCourses] = useState<Course[]>([])
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+function ErrorPanel({ what, error }: { what: string; error: string }) {
+  return (
+    <div className="panel panel-error" role="alert">
+      <p className="label">Signal lost</p>
+      <p>
+        Couldn't reach the {what} feed. {error}
+      </p>
+    </div>
+  )
+}
 
-  useEffect(() => {
-    fetch('/api/courses')
-      .then((res) => {
-        if (!res.ok) throw new Error(`Request failed: ${res.status}`)
-        return res.json() as Promise<Course[]>
-      })
-      .then(setCourses)
-      .catch((err: Error) => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [])
+function HomePage() {
+  const courses = useFetch(fetchCourses)
+  const assignments = useFetch(fetchAssignments)
+  const announcements = useFetch(fetchAnnouncements)
+
+  const syncing = courses.loading || assignments.loading || announcements.loading
+  const sync = () => {
+    if (syncing) return
+    courses.refetch()
+    assignments.refetch()
+    announcements.refetch()
+  }
 
   return (
     <div className="page">
       <header className="topbar">
-        <span className="brand">
-          <SyncMark size={30} />
+        <button
+          className={`brand ${syncing ? 'syncing' : ''}`}
+          onClick={sync}
+          aria-label="Sync with Canvas"
+          aria-busy={syncing}
+        >
+          <SyncMark size={40} />
           Sync
-        </span>
+        </button>
       </header>
 
       <div className="split">
-        <section className="section">
+        <section className="section" aria-busy={assignments.loading}>
           <h2 className="label section-label">
             Assignments
-            <span className="section-count">{pad(assignments.length)}</span>
+            {assignments.data && <span className="section-count">{pad(assignments.data.length)}</span>}
           </h2>
-          <AssignmentList assignments={assignments} />
+          {assignments.error && <ErrorPanel what="assignment" error={assignments.error} />}
+          {!assignments.error && <AssignmentList assignments={assignments.data} />}
         </section>
 
-        <section className="section">
+        <section className="section" aria-busy={announcements.loading}>
           <h2 className="label section-label">
             Announcements
-            <span className="section-count">{pad(announcements.length)}</span>
+            {announcements.data && (
+              <span className="section-count">{pad(announcements.data.length)}</span>
+            )}
           </h2>
-          <AnnouncementFeed announcements={announcements} />
+          {announcements.error && <ErrorPanel what="announcement" error={announcements.error} />}
+          {!announcements.error && <AnnouncementFeed announcements={announcements.data} />}
         </section>
       </div>
 
-      <section className="section" aria-busy={loading} aria-live="polite">
+      <section className="section" aria-busy={courses.loading}>
         <h2 className="label section-label">Courses</h2>
-        <CourseGrid courses={courses} loading={loading} error={error} />
+        {courses.error && <ErrorPanel what="course" error={courses.error} />}
+        {!courses.error && <CourseGrid courses={courses.data} />}
       </section>
 
       <footer className="footer label">

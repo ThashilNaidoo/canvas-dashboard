@@ -217,24 +217,11 @@
   color: var(--text-muted);
 }
 
-.skeleton-line {
+.course-card-skeleton .skeleton-line {
   grid-area: name;
   align-self: end;
-  display: block;
   height: 1.4rem;
   width: 70%;
-  background: linear-gradient(90deg, var(--line) 0%, var(--line-strong) 50%, var(--line) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.6s linear infinite;
-}
-
-@keyframes shimmer {
-  from {
-    background-position: 200% 0;
-  }
-  to {
-    background-position: -200% 0;
-  }
 }
 
 @media (max-width: 600px) {

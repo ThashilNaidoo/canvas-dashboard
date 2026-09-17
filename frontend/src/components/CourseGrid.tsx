@@ -1,16 +1,11 @@
+import type { Course } from '../lib/api'
 import { pad } from '../lib/format'
 import './CourseGrid.css'
 
-export type Course = { id: number; name: string }
+type Props = { courses: Course[] | null }
 
-type Props = {
-  courses: Course[]
-  loading: boolean
-  error: string | null
-}
-
-function CourseGrid({ courses, loading, error }: Props) {
-  if (loading) {
+function CourseGrid({ courses }: Props) {
+  if (courses === null) {
     return (
       <ol className="course-grid">
         {[0, 1, 2, 3].map((i) => (
@@ -20,15 +15,6 @@ function CourseGrid({ courses, loading, error }: Props) {
           </li>
         ))}
       </ol>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="panel panel-error" role="alert">
-        <p className="label">Signal lost</p>
-        <p>Couldn't reach the course feed. {error}</p>
-      </div>
     )
   }
 

@@ -97,6 +97,48 @@
   color: var(--danger);
 }
 
+/* Skeleton: same row geometry, shimmer bars in place of text */
+.assignment-skeleton .assignment-date .skeleton-line {
+  height: 0.65rem;
+}
+
+.assignment-skeleton .assignment-date .skeleton-line:first-child {
+  width: 60%;
+}
+
+.assignment-skeleton .assignment-body .skeleton-line:first-child {
+  width: 65%;
+}
+
+.assignment-skeleton .assignment-body .skeleton-line:last-child {
+  height: 0.7rem;
+  width: 40%;
+}
+
+.assignment-skeleton > .skeleton-line {
+  width: 72px;
+  height: 1.6rem;
+  border-radius: var(--radius-pill);
+}
+
+/* Done: struck through and dimmed, pill filled amber */
+.assignment.done .assignment-title {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--amber-deep);
+}
+
+.assignment.done .assignment-day,
+.assignment.done .assignment-meta {
+  color: var(--text-muted);
+}
+
+.assignment.done .assignment-due {
+  border-color: var(--amber);
+  background: var(--amber);
+  color: var(--bg);
+}
+
 @media (max-width: 600px) {
   .assignment {
     grid-template-columns: 64px 1fr;

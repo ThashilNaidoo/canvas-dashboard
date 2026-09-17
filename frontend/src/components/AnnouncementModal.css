@@ -1,0 +1,156 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgba(10, 8, 6, 0.72);
+  backdrop-filter: blur(3px);
+  animation: overlay-in 0.25s ease-out;
+}
+
+.modal-overlay.closing {
+  animation: overlay-in 0.3s ease-in reverse forwards;
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: 85svh;
+  display: flex;
+  border: var(--border-w) solid var(--line-strong);
+  background: var(--bg-raised);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8);
+  transform-origin: center;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1),
+    opacity 0.3s ease;
+}
+
+/* Same amber registration marks as the course cards */
+.modal::before,
+.modal::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: var(--border-w) solid var(--amber);
+}
+
+.modal::before {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.modal::after {
+  right: -2px;
+  bottom: -2px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* Scrolling lives here so the frame's corner brackets aren't clipped or
+   counted as overflow */
+.modal-scroll {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  width: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-5);
+}
+
+.modal:focus {
+  outline: none;
+}
+
+.modal-title {
+  font-size: 1.6rem;
+}
+
+.modal-author {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.modal-body {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.modal-subheading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-top: var(--space-2);
+}
+
+.modal-body a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-decoration-color: var(--amber-deep);
+  text-underline-offset: 3px;
+}
+
+.modal-body a:hover {
+  text-decoration-color: var(--amber);
+}
+
+.modal-body strong {
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+/* Instructor highlight: amber wash, like a marker on the page */
+.modal-body mark {
+  background: var(--amber-glow);
+  color: var(--text-h);
+  padding: 1px 3px;
+  box-decoration-break: clone;
+}
+
+.modal-body mark a {
+  color: var(--amber);
+}
+
+.modal-link {
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.modal-link:hover {
+  border-color: var(--amber);
+}
+
+@media (max-width: 600px) {
+  .modal-scroll {
+    padding: var(--space-4);
+  }
+}

@@ -1,18 +1,18 @@
-/* Two arcs chasing each other: one long, one short, with even gaps. */
+/* Two identical comet arcs on one orbit, 180° apart, around a solid core. Thick
+   heads tapering to points read as motion while standing still; the whole thing
+   is tilted so nothing sits level. */
 function SyncMark({ size = 22 }: { size?: number }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3.5"
-      strokeLinecap="round"
-      aria-hidden="true"
-    >
-      <path d="M6.6 12.58A10 10 0 0 1 25.85 17.74" />
-      <path d="M23.66 22.43A10 10 0 0 1 6.15 17.74" />
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+      <g className="rotor">
+        <g transform="rotate(-30 16 16)">
+          <path d="M5.12 12.04 L5.42 11.07 L5.83 10.13 L6.32 9.22 L6.89 8.36 L7.55 7.55 L8.28 6.80 L9.07 6.11 L9.93 5.49 L10.85 4.95 L11.81 4.49 L12.81 4.11 L13.85 3.82 L14.92 3.63 L16.00 3.52 L17.09 3.52 L18.19 3.61 L19.27 3.79 L20.34 4.07 L21.39 4.45 L22.40 4.92 L23.37 5.48 L24.29 6.12 L25.16 6.84 L25.96 7.64 L26.69 8.51 L27.35 9.45 L27.92 10.44 L28.40 11.49 L25.02 12.72 L24.75 11.92 L24.40 11.15 L23.99 10.41 L23.51 9.70 L22.97 9.03 L22.36 8.42 L21.71 7.85 L21.00 7.34 L20.25 6.89 L19.46 6.50 L18.63 6.18 L17.77 5.94 L16.90 5.77 L16.00 5.68 L15.10 5.66 L14.19 5.72 L13.28 5.87 L12.39 6.09 L11.52 6.39 L10.67 6.76 L9.85 7.21 L9.07 7.74 L8.33 8.33 L7.64 8.98 L7.00 9.70 L6.43 10.47 L5.91 11.30 L5.45 12.16Z" />
+          <circle cx="26.71" cy="12.10" r="1.80" />
+          <path d="M26.88 19.96 L26.58 20.93 L26.17 21.87 L25.68 22.78 L25.11 23.64 L24.45 24.45 L23.72 25.20 L22.93 25.89 L22.07 26.51 L21.15 27.05 L20.19 27.51 L19.19 27.89 L18.15 28.18 L17.08 28.37 L16.00 28.48 L14.91 28.48 L13.81 28.39 L12.73 28.21 L11.66 27.93 L10.61 27.55 L9.60 27.08 L8.63 26.52 L7.71 25.88 L6.84 25.16 L6.04 24.36 L5.31 23.49 L4.65 22.55 L4.08 21.56 L3.60 20.51 L6.98 19.28 L7.25 20.08 L7.60 20.85 L8.01 21.59 L8.49 22.30 L9.03 22.97 L9.64 23.58 L10.29 24.15 L11.00 24.66 L11.75 25.11 L12.54 25.50 L13.37 25.82 L14.23 26.06 L15.10 26.23 L16.00 26.32 L16.90 26.34 L17.81 26.28 L18.72 26.13 L19.61 25.91 L20.48 25.61 L21.33 25.24 L22.15 24.79 L22.93 24.26 L23.67 23.67 L24.36 23.02 L25.00 22.30 L25.57 21.53 L26.09 20.70 L26.55 19.84Z" />
+          <circle cx="5.29" cy="19.90" r="1.80" />
+        </g>
+      </g>
+      <circle className="core" cx="16" cy="16" r="3" />
     </svg>
   )
 }
